@@ -1,1 +1,38 @@
+name: merges docker image
 
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, features/*]
+jobs:
+  all_steps:
+    name: jjj
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+      - name: Install and Build
+        run: |
+          echo "🚀 Starting installation and build process..."
+          
+          # Встановлення pnpm глобально через npm
+          npm install -g pnpm
+          
+          # Перевірка версії pnpm
+          pnpm --version
+          
+          # Встановлення залежностей проєкту
+          echo "📦 Installing dependencies..."
+          pnpm install
+          
+          # Збірка проєкту
+          echo "🏗️ Building project..."
+          pnpm run build
+          
+          echo "✅ All commands executed successfully!"
+      
